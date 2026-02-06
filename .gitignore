@@ -1,0 +1,13 @@
+# Data & Secrets
+data/
+.env
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+
+# Environment
+venv/
+.gemini/
+.agent/
