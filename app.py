@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from src.model import load_data, apply_attribution_logic
+from src.advisor import generate_insights, simulate_scenarios
 
 # Page Config
 st.set_page_config(page_title="Profitability North Star", page_icon="⭐", layout="wide")
@@ -73,6 +74,28 @@ def main():
     kpi2.metric("📉 Ad Spend", f"${total_spend:,.0f}")
     kpi3.metric("⭐ Net Profit (CM)", f"${total_profit:,.0f}", delta_color="normal")
     kpi4.metric("🎯 MER Global", f"{global_mer:.2f}")
+
+    st.markdown("---")
+
+    # 4. CFO Advisor Section
+    st.subheader("🤖 CFO Advisor: Estrategia & Proyecciones")
+    
+    # Generate insights based on filtered data (or global, but filtered makes sense for time periods)
+    insights = generate_insights(df_filtered)
+    scenarios = simulate_scenarios(df_filtered)
+    
+    c_adv1, c_adv2 = st.columns([1, 1])
+    
+    with c_adv1:
+        st.info("### 💡 Insights Estratégicos")
+        for i in insights:
+            st.markdown(i)
+            
+    with c_adv2:
+        st.success("### 🔮 Proyección de Escenarios (Profit)")
+        # Display scenarios as a small dataframe or metrics
+        scen_df = pd.DataFrame.from_dict(scenarios, orient='index')
+        st.dataframe(scen_df.style.format({"Profit": "${:,.0f}"}))
 
     st.markdown("---")
 
