@@ -129,20 +129,24 @@ def main():
         }))
 
     # ESTO TIENE QUE TENER 4 ESPACIOS (O UN TAB) A LA IZQUIERDA:
+    # --- ESTO VA AL FINAL DE TODO, DENTRO DE MAIN() ---
     st.markdown("---")
     st.subheader("📖 La Historia de tu Negocio")
     col_story, col_action = st.columns(2)
 
     with col_story:
         st.info(f"En este periodo, el negocio generó **${total_profit:,.0f}** de beneficio real. "
-                f"Con un MER de **{global_mer:.2f}**...")
+                f"Con un MER de **{global_mer:.2f}**.")
 
     with col_action:
-        if global_mer > 3.0:
-            st.success("🎯 **Veredicto:** Es momento de apretar el acelerador.")
-        else:
-            st.warning("⚠️ **Veredicto:** Cuidado. Revisa los costos.")
+        # AQUÍ ES DONDE EL VEREDICTO "ESCUCHA" AL SELECTOR
+        if scenario == "Pesimista (-20% Rev)":
+            st.warning("⚠️ **Veredicto:** ¡Cuidado! En este escenario pesimista, la rentabilidad cae. Mejor optimizar.")
+        elif scenario == "Optimista (+20% Rev)":
+            st.success("🚀 **Veredicto:** ¡Escala agresiva! Los números proyectados son excelentes.")
+        else: # Realista
+            st.success("✅ **Veredicto:** El negocio es sólido. Seguí apretando el acelerador.")
 
-# ESTO QUEDA PEGADO AL BORDE IZQUIERDO (Línea 145 en tu foto)
+# ESTO VA PEGADO AL BORDE IZQUIERDO, FUERA DE MAIN
 if __name__ == "__main__":
     main()
